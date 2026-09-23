@@ -20,6 +20,7 @@ export const typeDefs = `#graphql
     # TODO Exercice 3 : ajouter le champ brand qui renvoie la marque de l'article
     brand: Brand
     # TODO Exercice 7 : ajouter le champ stockByWarehouse
+    stockByWarehouse: [StockEntry!]!
   }
 
   """Un client de la boutique."""
@@ -77,6 +78,16 @@ export const typeDefs = `#graphql
 
   # TODO Exercice 4 : y ajouter le champ products
   # TODO Exercice 7 : déclarer les types Warehouse (id, name, city) et StockEntry
+  type Warehouse {
+    id: ID!
+    name: String!
+    city: String!
+  }
+
+  type StockEntry {
+    warehouse: Warehouse!
+    quantity: Int!
+  }
 
  """Les points d'entrée en lecture."""
   type Query {
@@ -98,6 +109,7 @@ export const typeDefs = `#graphql
     brand(id: ID!): Brand
 
     # TODO Exercice 7 : ajouter warehouses
+    warehouses: [Warehouse!]!
   }
 
   """Les points d'entrée en écriture."""
@@ -112,6 +124,7 @@ export const typeDefs = `#graphql
     # TODO Exercice 6 : ajouter createBrand(input: CreateBrandInput!)
     createBrand(input: CreateBrandInput!): Brand!
     # TODO Exercice 7 : ajouter restockProduct(productId: ID!, warehouseId: ID!, quantity: Int!)
+    restockProduct(productId: ID!, warehouseId: ID!, quantity: Int!): Product!
     # TODO Exercice 8 : ajouter createOrder(input: CreateOrderInput!)
   }
 

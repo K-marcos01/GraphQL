@@ -37,11 +37,16 @@ export const resolvers = {
     brand: (_parent, args) => findById(db.brands, args.id),
 
     // TODO Exercice 7 : warehouses
+    warehouses: () => db.warehouses,
   },
   Product: {
     // TODO Exercice 3 : brand, à retrouver depuis product.brandId
     brand: (product) => findById(db.brands, product.brandId),
     // TODO Exercice 7 : stockByWarehouse, à construire depuis db.stocks
+    stockByWarehouse: (product) => db.stocks.filter((s) => s.productId === product.id).map((s) => ({
+        warehouse: findById(db.warehouses, s.warehouseId),
+        quantity: s.quantity,
+      })),
   },
 
   Brand: {
@@ -116,6 +121,41 @@ export const resolvers = {
       return brand;
     },
     // TODO Exercice 7 : restockProduct
+    restockProduct: (_parent, { productId, warehouseId, quantity }) => {
+    if (quantity <= 0) {
+      throw new GraphQLError('La quantité doit être supérieure à zéro.', {
+        extensions: { code: 'BAD_USER_INPUT' },
+      });
+    }
+
+    const product = findById(db.products, productId);
+    if (!product) {
+      throw new GraphQLError(`Article introuvable : ${productId}`, {
+        extensions: { code: 'NOT_FOUND' },
+      });
+    }
+
+    const warehouse = findById(db.warehouses, warehouseId);
+    if (!warehouse) {
+      throw new GraphQLError(`Entrepôt introuvable : ${warehouseId}`, {
+        extensions: { code: 'NOT_FOUND' },
+      });
+    }
+
+    let stockEntry = db.stocks.find(
+      (s) => s.productId === productId && s.warehouseId === warehouseId
+    );
+
+    if (stockEntry) {
+      stockEntry.quantity += quantity;
+    } else {
+      stockEntry = { productId, warehouseId, quantity };
+      db.stocks.push(stockEntry);
+    }
+
+    product.stock += quantity;
+    return product;
+  },
     // TODO Exercice 8 : createOrder
   },
 };
