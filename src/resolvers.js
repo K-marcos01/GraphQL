@@ -25,8 +25,9 @@ export const resolvers = {
     orders: () => db.orders,
     order: (_parent, args) => findById(db.orders, args.id),
     // TODO Exercice 1 : brand
-    brands: () => db.brands
-
+    brands: () => db.brands,
+    brand: (_parent, args) => findById(db.brands, args.id),
+    
     // TODO Exercice 2 : brand
     // TODO Exercice 6 : filtrer products selon args.brandId et args.maxPrice
     // TODO Exercice 7 : warehouses

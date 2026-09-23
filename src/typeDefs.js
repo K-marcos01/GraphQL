@@ -91,6 +91,8 @@ export const typeDefs = `#graphql
   # Type query pour un order
     "La marque d'un produit"
     brands: [Brand!]!
+    "La marque par son identifiant"
+    brand(id: ID!) : Brand
 
     # TODO Exercice 1 : ajouter brands
     # TODO Exercice 2 : ajouter brand(id: ID!)
