@@ -18,6 +18,7 @@ export const typeDefs = `#graphql
     brandId: ID
 
     # TODO Exercice 3 : ajouter le champ brand qui renvoie la marque de l'article
+    brand: Brand
     # TODO Exercice 7 : ajouter le champ stockByWarehouse
   }
 
@@ -94,8 +95,6 @@ export const typeDefs = `#graphql
     "La marque par son identifiant"
     brand(id: ID!) : Brand
 
-    # TODO Exercice 1 : ajouter brands
-    # TODO Exercice 2 : ajouter brand(id: ID!)
     # TODO Exercice 6 : ajouter les arguments brandId et maxPrice sur products
     # TODO Exercice 7 : ajouter warehouses
   }

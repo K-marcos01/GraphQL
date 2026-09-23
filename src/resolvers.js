@@ -27,14 +27,14 @@ export const resolvers = {
     // TODO Exercice 1 : brand
     brands: () => db.brands,
     brand: (_parent, args) => findById(db.brands, args.id),
-    
-    // TODO Exercice 2 : brand
+
     // TODO Exercice 6 : filtrer products selon args.brandId et args.maxPrice
     // TODO Exercice 7 : warehouses
   },
 
   Product: {
     // TODO Exercice 3 : brand, à retrouver depuis product.brandId
+    brand: (product) => findById(db.brands, product.brandId),
     // TODO Exercice 7 : stockByWarehouse, à construire depuis db.stocks
   },
 
