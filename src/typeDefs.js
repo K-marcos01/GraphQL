@@ -32,6 +32,7 @@ export const typeDefs = `#graphql
     orders: [Order!]!
 
     # TODO Exercice 5 : ajouter le champ ordersCount
+    ordersCount: Int!
   }
 
   """Une commande passée par un client."""
@@ -46,7 +47,7 @@ export const typeDefs = `#graphql
     lines: [OrderLine!]!
 
     # TODO Exercice 5 : ajouter le champ total
-    
+    total: Float!
   }
 
   """Une ligne de commande : un article, une quantité, un prix."""

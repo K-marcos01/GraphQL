@@ -47,6 +47,7 @@ export const resolvers = {
     orders: (user) => db.orders.filter((order) => order.userId === user.id),
 
     // TODO Exercice 5 : ordersCount
+    ordersCount: (user) => db.orders.filter((order) => order.userId === user.id).length,
   },
 
   Order: {
@@ -55,6 +56,7 @@ export const resolvers = {
     customer: (order) => findById(db.users, order.userId),
 
     // TODO Exercice 5 : total
+    total: (order) => order.lines.reduce((sum, line) => sum + line.quantity * line.unitPrice, 0),
   },
 
   OrderLine: {
