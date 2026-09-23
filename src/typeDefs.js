@@ -78,10 +78,10 @@ export const typeDefs = `#graphql
   # TODO Exercice 4 : y ajouter le champ products
   # TODO Exercice 7 : déclarer les types Warehouse (id, name, city) et StockEntry
 
-  """Les points d'entrée en lecture."""
+ """Les points d'entrée en lecture."""
   type Query {
-    "Tous les articles du catalogue."
-    products: [Product!]!
+    "Tous les articles du catalogue, avec filtres optionnels."
+    products(brandId: ID, maxPrice: Float): [Product!]!
     "Un article par son identifiant, ou null s'il n'existe pas."
     product(id: ID!): Product
     "Tous les clients."
@@ -92,13 +92,11 @@ export const typeDefs = `#graphql
     orders: [Order!]!
     "Une commande par son identifiant, ou null si elle n'existe pas."
     order(id: ID!): Order
-  # Type query pour un order
-    "La marque d'un produit"
+    "La liste des marques"
     brands: [Brand!]!
     "La marque par son identifiant"
-    brand(id: ID!) : Brand
+    brand(id: ID!): Brand
 
-    # TODO Exercice 6 : ajouter les arguments brandId et maxPrice sur products
     # TODO Exercice 7 : ajouter warehouses
   }
 
@@ -112,6 +110,7 @@ export const typeDefs = `#graphql
     updateOrderStatus(orderId: ID!, status: OrderStatus!): Order!
 
     # TODO Exercice 6 : ajouter createBrand(input: CreateBrandInput!)
+    createBrand(input: CreateBrandInput!): Brand!
     # TODO Exercice 7 : ajouter restockProduct(productId: ID!, warehouseId: ID!, quantity: Int!)
     # TODO Exercice 8 : ajouter createOrder(input: CreateOrderInput!)
   }
@@ -133,5 +132,9 @@ export const typeDefs = `#graphql
   }
 
   # TODO Exercice 6 : déclarer l'input CreateBrandInput
+  input CreateBrandInput {
+    name: String!
+    country: String!
+  }
   # TODO Exercice 8 : déclarer les inputs CreateOrderInput et OrderLineInput
 `;

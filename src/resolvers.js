@@ -18,20 +18,26 @@ import { db, findById, nextId } from './db.js';
 
 export const resolvers = {
   Query: {
-    products: () => db.products,
+    products: (_parent, { brandId, maxPrice }) => {
+      let result = db.products;
+      if (brandId) {
+        result = result.filter((p) => p.brandId === brandId);
+      }
+      if (maxPrice !== undefined) {
+        result = result.filter((p) => p.price <= maxPrice);
+      }
+      return result;
+    },
     product: (_parent, args) => findById(db.products, args.id),
     users: () => db.users,
     user: (_parent, args) => findById(db.users, args.id),
     orders: () => db.orders,
     order: (_parent, args) => findById(db.orders, args.id),
-    // TODO Exercice 1 : brand
     brands: () => db.brands,
     brand: (_parent, args) => findById(db.brands, args.id),
 
-    // TODO Exercice 6 : filtrer products selon args.brandId et args.maxPrice
     // TODO Exercice 7 : warehouses
   },
-
   Product: {
     // TODO Exercice 3 : brand, à retrouver depuis product.brandId
     brand: (product) => findById(db.brands, product.brandId),
@@ -104,6 +110,11 @@ export const resolvers = {
     },
 
     // TODO Exercice 6 : createBrand
+    createBrand: (_parent, {input}) => {
+      const brand = {id: nextId(db.brands), ...input};
+      db.brands.push(brand);
+      return brand;
+    },
     // TODO Exercice 7 : restockProduct
     // TODO Exercice 8 : createOrder
   },
