@@ -38,6 +38,10 @@ export const resolvers = {
     // TODO Exercice 7 : stockByWarehouse, à construire depuis db.stocks
   },
 
+  Brand: {
+    products: (brand) => db.products.filter((p) => p.brandId === brand.id),
+  },
+
   User: {
     // parent vaut ici l'utilisateur renvoyé par Query.user ou Query.users.
     orders: (user) => db.orders.filter((order) => order.userId === user.id),

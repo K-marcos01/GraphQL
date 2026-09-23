@@ -46,6 +46,7 @@ export const typeDefs = `#graphql
     lines: [OrderLine!]!
 
     # TODO Exercice 5 : ajouter le champ total
+    
   }
 
   """Une ligne de commande : un article, une quantité, un prix."""
@@ -70,6 +71,7 @@ export const typeDefs = `#graphql
     id: ID!
     name: String!
     country: String!
+    products: [Product!]!
   }
 
   # TODO Exercice 4 : y ajouter le champ products
